@@ -1,0 +1,15 @@
+name: Build Radar DLL
+on: [workflow_dispatch, push]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: microsoft/setup-msbuild@v2
+      - name: Build Release x64
+        run: msbuild Radar.sln /p:Configuration=Release /p:Platform=x64
+      - name: Upload Radar.dll
+        uses: actions/upload-artifact@v4
+        with:
+          name: Radar-DLL
+          path: bin/Release/Radar.dll
